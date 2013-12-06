@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 
 public class WebControl {
 
@@ -18,6 +20,8 @@ public class WebControl {
 
     private static final String site = "http://htmlunit.sourceforge.net";
     private static final String server = "https://www.regelleistung.net/test-ip/action/index";
+    private static final String github = "https://github.com";
+    private static final String githublogin = "https://github.com/login";
 
     private static String basicUser = "testanbieter";
     private static String basicPwd = "Sogase43";
@@ -36,18 +40,35 @@ public class WebControl {
 
         HtmlPage page = null;
         try {
-            page = callRegelleistungNet(webClient);
+            page = doGitHubLogin(webClient);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (page != null) {
-            LOGGER.debug(page.asText());
-        }
+        debugPageText(page);
 
         webClient.closeAllWindows();
     }
 
+    private static HtmlPage doGitHubLogin(WebClient webClient) {
+        try {
+            webClient.addRequestHeader("Accept-Encoding", "deflate");
+
+            HtmlPage page = webClient.getPage(github);
+            debugPageText(page);
+
+            DomElement elementByName = page.getElementByName("button signin");
+            HtmlSubmitInput input = (HtmlSubmitInput)elementByName;
+            HtmlPage loginPage = input.click();
+            debugPageText(loginPage);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     private static HtmlPage callRegelleistungNet(WebClient webClient) throws IOException, MalformedURLException {
         DefaultCredentialsProvider credentialsProvider = (DefaultCredentialsProvider)webClient.getCredentialsProvider();
@@ -58,4 +79,9 @@ public class WebControl {
         return page;
     }
 
+    private static void debugPageText(HtmlPage page) {
+        if (page != null) {
+            LOGGER.debug(page.asText());
+        }
+    }
 }
