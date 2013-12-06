@@ -11,7 +11,11 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlImageInput;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 
 public class WebControl {
@@ -22,6 +26,7 @@ public class WebControl {
     private static final String server = "https://www.regelleistung.net/test-ip/action/index";
     private static final String github = "https://github.com";
     private static final String githublogin = "https://github.com/login";
+    private static final String idosmail = "http://mail:5108/index.html";
 
     private static String basicUser = "testanbieter";
     private static String basicPwd = "Sogase43";
@@ -37,10 +42,11 @@ public class WebControl {
 
     private static void doWork() {
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_17);
+        webClient.addRequestHeader("Accept-Encoding", "deflate");
 
         HtmlPage page = null;
         try {
-            page = doGitHubLogin(webClient);
+            page = doIdosWebmailLogin(webClient);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,6 +55,29 @@ public class WebControl {
 
         webClient.closeAllWindows();
     }
+
+    private static HtmlPage doIdosWebmailLogin(WebClient webClient) {
+        try {
+            HtmlPage page = webClient.getPage(idosmail);
+            debugPageText(page);
+            HtmlForm form = page.getFormByName("mainform");
+            HtmlInput inputUsername = form.getInputByName("username");
+            HtmlPasswordInput inputPassword = form.getInputByName("password1");
+            HtmlImageInput logonButton = form.getInputByName("submitbtn");
+            inputUsername.setValueAttribute("js");
+            inputPassword.setValueAttribute("java05");
+
+            HtmlPage afterLogin = (HtmlPage)logonButton.click();
+            debugPageText(afterLogin);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     private static HtmlPage doGitHubLogin(WebClient webClient) {
         try {
