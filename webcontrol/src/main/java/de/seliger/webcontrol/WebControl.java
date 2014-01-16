@@ -1,14 +1,10 @@
 package de.seliger.webcontrol;
 
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -28,10 +24,6 @@ public class WebControl {
     private static final String githublogin = "https://github.com/login";
     private static final String idosmail = "http://mail:5108/index.html";
 
-    private static String basicUser = "testanbieter";
-    private static String basicPwd = "Sogase43";
-    private static String siteUserParam = "ipar_u";
-    private static String sitePwdParam = "ipar_p";
 
     public static void main(String[] args) {
         System.out.println("WebControl.main()");
@@ -65,7 +57,7 @@ public class WebControl {
             HtmlPasswordInput inputPassword = form.getInputByName("password1");
             HtmlImageInput logonButton = form.getInputByName("submitbtn");
             inputUsername.setValueAttribute("js");
-            inputPassword.setValueAttribute("java05");
+            inputPassword.setValueAttribute("xxxx");
 
             HtmlPage afterLogin = (HtmlPage)logonButton.click();
             debugPageText(afterLogin);
@@ -97,15 +89,6 @@ public class WebControl {
         }
 
         return null;
-    }
-
-    private static HtmlPage callRegelleistungNet(WebClient webClient) throws IOException, MalformedURLException {
-        DefaultCredentialsProvider credentialsProvider = (DefaultCredentialsProvider)webClient.getCredentialsProvider();
-        credentialsProvider.addCredentials(basicUser, basicPwd);
-
-
-        HtmlPage page = webClient.getPage(server);
-        return page;
     }
 
     private static void debugPageText(HtmlPage page) {
