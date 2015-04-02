@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t wayne07/ubuntu-1504:withJava docker-dir/
+docker build -t wayne07/ubuntu-1504:latest docker-dir/
