@@ -14,4 +14,3 @@ RUN cd /tmp && \
     tar -xzvf $JAVA_FILE && \
     rm -f /tmp/$JAVA_FILE && \
     mv /tmp/jdk1.7.0_75 /opt/java
-
