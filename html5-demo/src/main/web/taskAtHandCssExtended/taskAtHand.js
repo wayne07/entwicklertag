@@ -1,6 +1,6 @@
 "use strict";
 function TaskAtHandApp() {
-    var version = "v2.2";
+    var version = "v2.3";
     var appStorage = new AppStorage("taskAtHand");
 
     function setStatus(message) {
@@ -34,7 +34,9 @@ function TaskAtHandApp() {
     function addTaskElement(taskName) {
         var $task = $("#task-template .task").clone();
 
-        $task.click(function() { onSelectTask($task); });
+        $task.click(function () {
+            onSelectTask($task);
+        });
 
         $("span.task-name", $task).text(taskName);
 
@@ -107,6 +109,25 @@ function TaskAtHandApp() {
         }
     }
 
+    function onChangeTheme() {
+        var theme = $("#theme>option").filter(":selected").val();
+        setTheme(theme);
+        appStorage.setValue("theme", theme);
+    }
+
+    function setTheme(theme) {
+        $("#theme-style").attr("href", "themes/" + theme + ".css");
+    }
+
+    function loadTheme() {
+        var theme = appStorage.getValue("theme");
+        if (theme) {
+            setTheme(theme);
+            $("#theme>option[value=" + theme + "]")
+                .attr("selected", "selected");
+        }
+    }
+
     this.start = function () {
         $("#new-task-name").keypress(function (e) {
             if (e.which == 13) { // Enter key
@@ -114,10 +135,13 @@ function TaskAtHandApp() {
                 return false;
             }
         }).focus();
+        $("#theme").change(onChangeTheme);
 
         $("#app>header").append(version);
         setStatus("ready");
+
         loadTaskList();
+        loadTheme();
     };
 }
 

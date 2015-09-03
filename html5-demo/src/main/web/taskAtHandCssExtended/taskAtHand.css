@@ -22,12 +22,18 @@ button
 
 #app
 {
-    margin: 4px;
-    background-color: #bbc;
-    background: -webkit-linear-gradient(top, #bbc, #558);
-    background: -moz-linear-gradient(top, #bbc, #558);
-    background: -ms-linear-gradient(top, #bbc, #558);
-    background: linear-gradient(top, #bbc, #558);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    background-color: #bcb;
+    background: -webkit-linear-gradient(top, #bcb, #585);
+    background: -moz-linear-gradient(top, #bcb, #585);
+    background: -ms-linear-gradient(top, #bcb, #585);
+    background: linear-gradient(top, #bcb, #585);
 }
 
 #app>header
@@ -35,14 +41,18 @@ button
     padding: 0 0.5em;
     font-size: 1.5em;
     color: WhiteSmoke;
-    background-color: #006;
+    background-color: #060;
 }
+
 #app>footer
 {
+    position: absolute;
+    bottom: 0;
     padding: 0.25em;
     color: WhiteSmoke;
-    background-color: #006;
+    background-color: #060;
 }
+
 #main
 {
     max-width: 25em;
@@ -157,4 +167,12 @@ button
 {
     margin: 0;
     font-size: 1em;
+}
+
+#toolbar
+{
+    padding: 0.25em;
+    font-size: 0.8em;
+    color: WhiteSmoke;
+    background-color: rgba(0, 0, 0, 0.4);
 }
