@@ -28,8 +28,8 @@ button
     background: -moz-linear-gradient(top, #bbc, #558);
     background: -ms-linear-gradient(top, #bbc, #558);
     background: linear-gradient(top, #bbc, #558);
-
 }
+
 #app>header
 {
     padding: 0 0.5em;
@@ -79,11 +79,31 @@ button
 {
     position: relative;
     list-style: none;
-    padding: 0.25em;
+    padding: 0.5em;
     margin: 0.25em;
     background-color: beige;
     border-radius: 4px;
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+
+}
+
+#task-list .task.selected
+{
+    padding: 0.6em 0.5em;
+    border: 2px solid orange;
+    border-radius: 6px;
+    background-color: white;
+}
+
+#task-list .task:hover .tools,
+#task-list .task.selected .tools
+{
+    opacity: 1;
 }
 
 #task-list li
@@ -100,6 +120,13 @@ button
     right: 0.25em;
     border: 1px solid black;
     border-radius: 2px;
+    padding: 1px;
+    opacity: 0;
+
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 #task-list .task .tools button
@@ -110,7 +137,7 @@ button
     color: transparent;
     width: 16px;
     height: 16px;
-    background: url(images/icons.png);
+    background: url(images/icons.png) no-repeat;
 }
 
 #task-list .task .tools button.delete
@@ -124,4 +151,10 @@ button
 #task-list .task .tools button.moveDown
 {
     background-position: -32px 0;
+}
+
+#task-list .task input.task-name
+{
+    margin: 0;
+    font-size: 1em;
 }

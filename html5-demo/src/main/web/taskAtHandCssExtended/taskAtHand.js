@@ -1,6 +1,6 @@
 "use strict";
 function TaskAtHandApp() {
-    var version = "v2.1";
+    var version = "v2.2";
     var appStorage = new AppStorage("taskAtHand");
 
     function setStatus(message) {
@@ -33,6 +33,9 @@ function TaskAtHandApp() {
 
     function addTaskElement(taskName) {
         var $task = $("#task-template .task").clone();
+
+        $task.click(function() { onSelectTask($task); });
+
         $("span.task-name", $task).text(taskName);
 
         $("#task-list").append($task);
@@ -58,6 +61,15 @@ function TaskAtHandApp() {
             .blur(function () {
                 $(this).hide().siblings("span.task-name").show();
             });
+    }
+
+    function onSelectTask($task) {
+        if ($task) {
+            // Unselect other tasks
+            $task.siblings(".selected").removeClass("selected");
+            // Select this task
+            $task.addClass("selected");
+        }
     }
 
     function onEditTaskName($span) {
